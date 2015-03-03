@@ -8,8 +8,8 @@ module Hexagram
       def self.each(persistence_class)
       end
 
-      def self.build(persistence_class)
-        persistence_class.new
+      def self.build(persistence_class, attributes)
+        persistence_class.new(attributes)
       end
 
       def self.exists?(entity, persistence_class)

@@ -88,13 +88,22 @@ RSpec.describe TestRepository do
   end
 
   describe "build" do
-    it "returns an empty instance of an entity" do
+    it "returns an empty instance of an entity, when called without any parameters" do
       persistence_class = Persisters::Test
       repository = described_class.new(persistence_class, orm_adapter)
 
       ret = repository.build
       expect(ret).to be_a(Entities::Test)
       expect(ret.value).to be_nil
+    end
+
+    it "returns instance with attributes set, when called with any parameters", :focus do
+      persistence_class = Persisters::Test
+      repository = described_class.new(persistence_class, orm_adapter)
+      rand_value = rand
+      ret = repository.build(attributes: {"value" => rand_value})
+
+      expect(ret.value).to eq(rand_value)
     end
   end
 

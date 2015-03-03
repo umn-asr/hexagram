@@ -11,8 +11,8 @@ module Hexagram
         map_record_out(orm_adapter.find(id, persistence_class))
       end
 
-      def build
-        map_record_out(orm_adapter.build(persistence_class))
+      def build(attributes: {})
+        map_record_out(orm_adapter.build(persistence_class, attributes))
       end
 
       def save(entity)

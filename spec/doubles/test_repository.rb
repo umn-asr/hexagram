@@ -7,6 +7,10 @@ module Persisters
   class Test
     attr_accessor :value, :id
 
+    def initialize(attributes = {})
+      self.value = attributes["value"]
+    end
+
     def self.find?(id)
     end
 
