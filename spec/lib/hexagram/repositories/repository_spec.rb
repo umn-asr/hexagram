@@ -117,9 +117,7 @@ RSpec.describe TestRepository do
 
       allow(persistence_class).to receive(:find).with(rand_id).and_return(persistence_instance)
 
-      repository = described_class.new(persistence_class, orm_adapter)
-
-      ret = repository.find(rand_id)
+      ret = campus_repository.find(rand_id)
       expect(ret).to be_a(Entities::Test)
       expect(ret.value).to eq(rand_value)
       expect(ret.id).to eq(rand_id)
