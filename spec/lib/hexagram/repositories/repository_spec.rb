@@ -111,7 +111,6 @@ RSpec.describe TestRepository do
     it "returns an empty instance of a CampusEntity" do
       rand_value = rand
       rand_id = rand(5)
-      persistence_class = Persisters::Test
       persistence_instance = Persisters::Test.new
       persistence_instance.id = rand_id
       persistence_instance.value = rand_value
