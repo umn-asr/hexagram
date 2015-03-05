@@ -11,6 +11,10 @@ module Hexagram
         map_record_out(orm_adapter.find(id, persistence_class))
       end
 
+      def all()
+        orm_adapter.all(persistence_class)
+      end
+
       def build(attributes: {})
         map_record_out(orm_adapter.build(persistence_class, attributes))
       end
