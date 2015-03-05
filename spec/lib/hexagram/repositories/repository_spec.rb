@@ -4,23 +4,23 @@ require_relative "../../../doubles/test_repository"
 RSpec.describe TestRepository do
   let(:persistence_class) { Persisters::Test }
   let(:orm_adapter) { Hexagram::Adapters::ActiveRecord }
-  let(:campus_repository) { described_class.new(persistence_class, orm_adapter) }
+  let(:repository) { described_class.new(persistence_class, orm_adapter) }
   let(:entity) { instance_double(Entities::Test) }
 
   describe "save" do
     describe "when the entity is valid" do
       it "saves it through the orm_adapter" do
-        allow(entity).to receive(:valid?).with(campus_repository).and_return(true)
+        allow(entity).to receive(:valid?).with(repository).and_return(true)
         expect(orm_adapter).to receive(:save).with(entity, persistence_class)
-        campus_repository.save(entity)
+        repository.save(entity)
       end
     end
 
     describe "when the entity is not valid" do
       it "does not save it through the orm_adapter" do
-        allow(entity).to receive(:valid?).with(campus_repository).and_return(false)
+        allow(entity).to receive(:valid?).with(repository).and_return(false)
         expect(orm_adapter).not_to receive(:save).with(entity, persistence_class)
-        campus_repository.save(entity)
+        repository.save(entity)
       end
     end
   end
@@ -28,17 +28,17 @@ RSpec.describe TestRepository do
   describe "update" do
     describe "when the entity is valid" do
       it "saves it through the orm_adapter" do
-        allow(entity).to receive(:valid?).with(campus_repository).and_return(true)
+        allow(entity).to receive(:valid?).with(repository).and_return(true)
         expect(orm_adapter).to receive(:save).with(entity, persistence_class)
-        campus_repository.update(entity)
+        repository.update(entity)
       end
     end
 
     describe "when the entity is not valid" do
       it "does not save it through the orm_adapter" do
-        allow(entity).to receive(:valid?).with(campus_repository).and_return(false)
+        allow(entity).to receive(:valid?).with(repository).and_return(false)
         expect(orm_adapter).not_to receive(:save).with(entity, persistence_class)
-        campus_repository.update(entity)
+        repository.update(entity)
       end
     end
   end
@@ -47,15 +47,15 @@ RSpec.describe TestRepository do
     it "asks the orm_adapter if the entity exists" do
       random_return = [true, false].sample
       expect(orm_adapter).to receive(:exists?).with(entity, persistence_class).and_return(random_return)
-      expect(campus_repository.exists?(entity)).to eq(random_return)
+      expect(repository.exists?(entity)).to eq(random_return)
     end
   end
 
   describe "valid?" do
     it "asks the entity if it is valid" do
       random_return = [true, false].sample
-      expect(entity).to receive(:valid?).with(campus_repository).and_return(random_return)
-      expect(campus_repository.valid?(entity)).to eq(random_return)
+      expect(entity).to receive(:valid?).with(repository).and_return(random_return)
+      expect(repository.valid?(entity)).to eq(random_return)
     end
   end
 
@@ -65,7 +65,7 @@ RSpec.describe TestRepository do
       returned = Object.new
       expect(orm_adapter).to receive(:where).with(options, persistence_class).and_return(returned)
 
-      expect(campus_repository.where(options)).to eq(returned)
+      expect(repository.where(options)).to eq(returned)
     end
   end
 
@@ -75,14 +75,14 @@ RSpec.describe TestRepository do
     describe "when a entity with that attribute value has already been persisted" do
       it "returns false" do
         expect(orm_adapter).to receive(:where).with(attributes, persistence_class).and_return([Object.new])
-        expect(campus_repository.unique?(attributes)).to be_falsey
+        expect(repository.unique?(attributes)).to be_falsey
       end
     end
 
     describe "when a entity with that attribute value has not been persisted" do
       it "returns true" do
         expect(orm_adapter).to receive(:where).with(attributes, persistence_class).and_return([])
-        expect(campus_repository.unique?(attributes)).to be_truthy
+        expect(repository.unique?(attributes)).to be_truthy
       end
     end
   end
@@ -117,7 +117,7 @@ RSpec.describe TestRepository do
 
       allow(persistence_class).to receive(:find).with(rand_id).and_return(persistence_instance)
 
-      ret = campus_repository.find(rand_id)
+      ret = repository.find(rand_id)
       expect(ret).to be_a(Entities::Test)
       expect(ret.value).to eq(rand_value)
       expect(ret.id).to eq(rand_id)
