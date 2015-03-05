@@ -12,7 +12,7 @@ module Hexagram
       end
 
       def all()
-        orm_adapter.all(persistence_class)
+        map_records_out(Array(orm_adapter.all(persistence_class)))
       end
 
       def build(attributes: {})
@@ -57,6 +57,10 @@ module Hexagram
             entity.public_send("#{attr}=".to_sym, record.public_send(attr))
           end
         end
+      end
+
+      def map_records_out(collection)
+        collection.map { |record| map_record_out(record) }
       end
     end
   end
