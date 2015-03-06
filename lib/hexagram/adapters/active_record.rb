@@ -5,6 +5,10 @@ module Hexagram
         persistence_class.find(id)
       end
 
+      def self.all(persistence_class)
+        persistence_class.all()
+      end
+
       def self.each(persistence_class)
       end
 
