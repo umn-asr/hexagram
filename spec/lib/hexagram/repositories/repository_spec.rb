@@ -124,18 +124,16 @@ RSpec.describe TestRepository do
     end
   end
 
-  describe "all" do
-    before do
-      @rand_value = rand
-      @rand_id = rand(5)
-      @persistence_instance = Persisters::Test.new
-      @persistence_instance.id = @rand_id
-      @persistence_instance.value = @rand_value
+  describe "all", :focus do
+    let(:rand_value) { rand }
+    let(:rand_id) { rand(5) }
+    let(:persistence_instance) do
+      Persisters::Test.new(id: rand_id, value: rand_value)
     end
 
     describe "when there are elements in the array" do
       before do
-        allow(persistence_class).to receive(:all).and_return(@persistence_instance)
+        allow(persistence_class).to receive(:all).and_return(persistence_instance)
       end
 
       it "returns a collection" do
@@ -146,8 +144,8 @@ RSpec.describe TestRepository do
       it "contains a collection of the entity objects" do
         ret = repository.all.first
         expect(ret).to be_a(Entities::Test)
-        expect(ret.value).to eq(@rand_value)
-        expect(ret.id).to eq(@rand_id)
+        expect(ret.value).to eq(rand_value)
+        expect(ret.id).to eq(rand_id)
       end
     end
 
