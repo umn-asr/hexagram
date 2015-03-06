@@ -97,7 +97,7 @@ RSpec.describe TestRepository do
       expect(ret.value).to be_nil
     end
 
-    it "returns instance with attributes set, when called with any parameters", :focus do
+    it "returns instance with attributes set, when called with any parameters" do
       persistence_class = Persisters::Test
       repository = described_class.new(persistence_class, orm_adapter)
       rand_value = rand
@@ -124,7 +124,7 @@ RSpec.describe TestRepository do
     end
   end
 
-  describe "all", :focus do
+  describe "all" do
     let(:rand_value) { rand }
     let(:rand_id) { rand(5) }
     let(:persistence_instance) do
