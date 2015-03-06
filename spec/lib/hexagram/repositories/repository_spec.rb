@@ -101,7 +101,7 @@ RSpec.describe TestRepository do
       persistence_class = Persisters::Test
       repository = described_class.new(persistence_class, orm_adapter)
       rand_value = rand
-      ret = repository.build(attributes: {"value" => rand_value})
+      ret = repository.build(attributes: {value: rand_value})
 
       expect(ret.value).to eq(rand_value)
     end
