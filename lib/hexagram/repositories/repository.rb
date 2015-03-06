@@ -11,7 +11,7 @@ module Hexagram
         map_record_out(orm_adapter.find(id, persistence_class))
       end
 
-      def all()
+      def all
         map_records_out(Array(orm_adapter.all(persistence_class)))
       end
 
