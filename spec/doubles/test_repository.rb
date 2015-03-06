@@ -8,7 +8,8 @@ module Persisters
     attr_accessor :value, :id
 
     def initialize(attributes = {})
-      self.value = attributes["value"]
+      self.id = attributes[:id]
+      self.value = attributes[:value]
     end
 
     def self.find?(id)
